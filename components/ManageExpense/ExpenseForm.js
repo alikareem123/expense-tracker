@@ -1,25 +1,44 @@
-import { View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
+import { useState } from "react";
 
 function ExpenseForm() {
-  function amountChangeHandler() {}
+  const [inputValues, setInputValues] = useState({
+    amount: "",
+    date: "",
+    description: "",
+  });
+  function inputChangeHandler(inputIdentifier, enteredValue) {
+    setInputValues((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
   return (
-    <View>
-      <Input
-        label="Amount"
-        textInputConfig={{
-          keyboardType: "decimal-pad",
-          onChangeText: amountChangeHandler,
-        }}
-      />
-      <Input
-        label="Date"
-        textInputConfig={{
-          placeholder: "YYYY-MM-DD",
-          maxLength: 10,
-          onChangeText: () => {},
-        }}
-      />
+    <View style={styles.form}>
+      <Text style={styles.title}>Your Expense</Text>
+      <View>
+        <Input
+          style={styles.rowInput}
+          label="Amount"
+          textInputConfig={{
+            keyboardType: "decimal-pad",
+            onChangeText: inputChangeHandler,
+            value: inputValues,
+          }}
+        />
+        <Input
+          style={styles.rowInput}
+          label="Date"
+          textInputConfig={{
+            placeholder: "YYYY-MM-DD",
+            maxLength: 10,
+            onChangeText: () => {},
+          }}
+        />
+      </View>
       <Input
         label="Description"
         textInputConfig={{
@@ -32,3 +51,23 @@ function ExpenseForm() {
   );
 }
 export default ExpenseForm;
+
+const styles = StyleSheet.create({
+  form: {
+    marginTop: 40,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+    marginVertical: 24,
+    textAlign: "center",
+  },
+  inputsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  rowInput: {
+    flex: 1,
+  },
+});
