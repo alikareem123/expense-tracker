@@ -38,12 +38,10 @@ function ManageExpense({ route, navigation }) {
       setIsSubmitting(false);
     }
   }
-  function errorHandler() {
-    setError(null);
-  }
+  
 
   if (error && !isSubmitting) {
-    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
+    return <ErrorOverlay message={error}/>;
   }
   function cancelHandler() {
     navigation.goBack();
